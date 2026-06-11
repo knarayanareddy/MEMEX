@@ -1,0 +1,46 @@
+# ═══════════════════════════════════════════════════════════════
+# MEMEX Docker Compose — Local Development
+# ═══════════════════════════════════════════════════════════════
+#
+# Usage:
+#   docker compose up -d          # Start all services
+#   docker compose logs -f memex  # Follow logs
+#   docker compose down           # Stop
+#
+# ═══════════════════════════════════════════════════════════════
+
+services:
+  memex:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: memex-daemon
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:7700:7700"  # Bind to localhost only
+    volumes:
+      - memex-data:/home/memex/.memex
+      - ~/Documents:/home/memex/watched/documents:ro
+      - ~/Projects:/home/memex/watched/projects:ro
+    environment:
+      - MEMEX_DATA_DIR=/home/memex/.memex
+      - MEMEX_LOG_LEVEL=INFO
+      - OLLAMA_HOST=127.0.0.1:11434
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:7700/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: "2.0"
+        reservations:
+          memory: 1G
+          cpus: "0.5"
+
+volumes:
+  memex-data:
+    driver: local

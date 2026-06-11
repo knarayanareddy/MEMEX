@@ -1,0 +1,20 @@
+# ═══════════════════════════════════════════════════════════════
+# ADDENDUM C — Chunk Token Budget Constants
+# CANONICAL — do not duplicate these values anywhere else
+# ═══════════════════════════════════════════════════════════════
+
+[chunk_budgets]
+prose_tokens           = 400
+prose_overlap_tokens   = 50
+code_tokens            = 300
+code_overlap_tokens    = 30
+email_tokens           = 200
+email_overlap_tokens   = 20
+pdf_tokens             = 400
+pdf_overlap_tokens     = 50
+image_ocr_tokens       = 150
+image_ocr_overlap      = 0
+
+[context_window]
+max_context_tokens     = 6000       # Tokens reserved for retrieved context in LLM prompt
+conversation_history_turns = 6      # Last N turns included in prompt

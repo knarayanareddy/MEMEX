@@ -1,0 +1,24 @@
+# ═══════════════════════════════════════════════════════════════
+# ADDENDUM B — Retention & Purge Day Values
+# CANONICAL — do not duplicate these values anywhere else
+# ═══════════════════════════════════════════════════════════════
+
+[raw_content]
+purge_after_days       = 7          # days after captured_at before raw_content is NULLed
+
+[conversations]
+retain_turns_days      = 365        # turns older than this are soft-deleted
+
+[failed_documents]
+max_retry_count        = 5          # abandon after this many retries
+retry_backoff_seconds  = [1, 2, 4, 8, 16]  # exponential backoff per retry
+
+[queue]
+max_depth              = 500        # hard ceiling; items dropped above this
+warn_threshold         = 400        # WARN logged above this
+
+[purge_schedule]
+run_interval_minutes   = 60         # how often the purge job runs
+
+[parser]
+timeout_seconds        = 30         # parser killed after this; document marked PARSE_FAILED

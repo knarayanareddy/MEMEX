@@ -1,0 +1,51 @@
+# ═══════════════════════════════════════════════════════════════
+# ADDENDUM F — SLO Definitions & Alert Thresholds
+# CANONICAL — do not duplicate these values anywhere else
+# ═══════════════════════════════════════════════════════════════
+
+[slo_001_idle_cpu]
+metric                 = "daemon_idle_cpu_pct"
+target                 = 1.0
+alert_threshold        = 5.0
+measurement_window_sec = 60
+
+[slo_002_fts_latency]
+metric                 = "fts_search_p95_ms"
+target                 = 50
+alert_threshold        = 200
+corpus_size_chunks     = 1_000_000
+
+[slo_003_vector_latency]
+metric                 = "vector_search_p95_ms"
+target                 = 200
+alert_threshold        = 500
+corpus_size_chunks     = 1_000_000
+
+[slo_004_hybrid_latency]
+metric                 = "hybrid_retrieval_p95_ms"
+target                 = 500
+alert_threshold        = 1000
+corpus_size_chunks     = 1_000_000
+
+[slo_005_llm_first_token]
+metric                 = "llm_first_token_p50_ms"
+target                 = 3000
+alert_threshold        = 10000
+hardware               = "cpu"
+
+[slo_006_ingestion_cpu]
+metric                 = "ingestion_avg_ms"
+target                 = 30_000
+alert_threshold        = 120_000
+hardware               = "cpu"
+
+[slo_007_ingestion_gpu]
+metric                 = "ingestion_avg_ms"
+target                 = 10_000
+alert_threshold        = 30_000
+hardware               = "gpu"
+
+[slo_010_forget_latency]
+metric                 = "forget_single_doc_ms"
+target                 = 5000
+alert_threshold        = 30_000

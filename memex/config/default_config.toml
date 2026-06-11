@@ -1,0 +1,39 @@
+# ═══════════════════════════════════════════════════════════════
+# MEMEX Configuration — ~/.memex/config.toml
+# ═══════════════════════════════════════════════════════════════
+
+[daemon]
+data_dir         = "~/.memex"
+log_level        = "INFO"           # DEBUG | INFO | WARN | ERROR | CRITICAL
+api_host         = "127.0.0.1"     # MUST be loopback
+api_port         = 7700
+ollama_base_url  = "http://127.0.0.1:11434"
+
+[embedding]
+model             = "nomic-embed-text"
+model_version     = "1.5"
+active_collection = "memex_vectors_v1"
+migration_collection = ""
+
+[chat]
+model             = "llama3:8b"
+
+[watcher]
+paths             = ["~/Documents", "~/Projects"]
+excluded_extensions = [".git", ".svn", ".hg", "__pycache__", ".tox", ".venv"]
+
+[browser]
+fetch_page_content     = false
+poll_interval_seconds  = 300
+
+[terminal]
+poll_interval_seconds  = 120
+
+[clipboard]
+poll_interval_seconds  = 30
+
+[workers]
+count              = 4
+
+[graph]
+extract_relations  = false

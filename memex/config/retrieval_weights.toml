@@ -1,0 +1,21 @@
+# ═══════════════════════════════════════════════════════════════
+# ADDENDUM A — Retrieval Weight Constants
+# CANONICAL — do not duplicate these values anywhere else
+# ═══════════════════════════════════════════════════════════════
+
+[hybrid_retrieval]
+vector_weight          = 0.40
+keyword_weight         = 0.30
+graph_weight           = 0.20
+temporal_weight        = 0.10
+# Invariant: vector + keyword + graph + temporal == 1.0
+
+[temporal_decay]
+lambda                 = 0.005      # exp(-lambda * age_days); higher = faster decay
+
+[retrieval_limits]
+default_top_k          = 20         # Candidates returned before context budgeting
+max_top_k              = 50         # Hard ceiling regardless of user request
+
+[relation_extraction]
+confidence_threshold   = 0.50       # Relations below this are discarded

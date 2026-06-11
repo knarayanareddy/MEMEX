@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEMEX — Second Brain</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <div class="logo">
+                <h1>🧠 MEMEX</h1>
+                <p class="subtitle">Second Brain</p>
+            </div>
+            <nav>
+                <button class="nav-btn active" data-view="chat" onclick="showView('chat')">💬 Chat</button>
+                <button class="nav-btn" data-view="search" onclick="showView('search')">🔍 Search</button>
+                <button class="nav-btn" data-view="timeline" onclick="showView('timeline')">📋 Timeline</button>
+                <button class="nav-btn" data-view="graph" onclick="showView('graph')">🕸️ Graph</button>
+                <button class="nav-btn" data-view="settings" onclick="showView('settings')">⚙️ Settings</button>
+            </nav>
+            <div class="sidebar-footer">
+                <div id="health-status" class="health-ok">● Healthy</div>
+                <div id="stats-summary" class="stats-summary"></div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="main-content">
+            <!-- Chat View -->
+            <div id="chat-view" class="view active">
+                <div id="chat-header">
+                    <h2>Chat with your memory</h2>
+                    <span id="session-id" class="session-badge"></span>
+                </div>
+                <div id="chat-messages"></div>
+                <div id="chat-input-area">
+                    <div class="input-wrapper">
+                        <textarea id="chat-input" placeholder="Ask your memory..." rows="2"></textarea>
+                        <button id="send-btn" onclick="sendMessage()">Send ↵</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search View -->
+            <div id="search-view" class="view">
+                <h2>Search Memory</h2>
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Search across all indexed content..." />
+                    <button onclick="searchMemory()">Search</button>
+                </div>
+                <div id="search-filters" class="filters">
+                    <label>Source:
+                        <select id="filter-source">
+                            <option value="">All</option>
+                            <option value="filesystem">Files</option>
+                            <option value="browser">Browser</option>
+                            <option value="terminal">Terminal</option>
+                            <option value="clipboard">Clipboard</option>
+                        </select>
+                    </label>
+                    <label>After: <input type="date" id="filter-after" /></label>
+                    <label>Before: <input type="date" id="filter-before" /></label>
+                </div>
+                <div id="search-results"></div>
+            </div>
+
+            <!-- Timeline View -->
+            <div id="timeline-view" class="view">
+                <h2>Timeline</h2>
+                <div class="timeline-controls">
+                    <select id="timeline-source" onchange="loadTimeline()">
+                        <option value="">All sources</option>
+                        <option value="filesystem">Files</option>
+                        <option value="browser">Browser</option>
+                        <option value="terminal">Terminal</option>
+                        <option value="clipboard">Clipboard</option>
+                    </select>
+                    <button onclick="loadTimeline()">Refresh</button>
+                </div>
+                <div id="timeline-list"></div>
+            </div>
+
+            <!-- Graph View -->
+            <div id="graph-view" class="view">
+                <h2>Entity Graph</h2>
+                <div class="search-bar">
+                    <input type="text" id="entity-search" placeholder="Search entities..." />
+                    <button onclick="searchEntities()">Search</button>
+                </div>
+                <div id="entity-list"></div>
+            </div>
+
+            <!-- Settings View -->
+            <div id="settings-view" class="view">
+                <h2>System Status</h2>
+                <div id="health-details"></div>
+                <div id="stats-details"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

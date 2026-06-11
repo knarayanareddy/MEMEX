@@ -1,0 +1,75 @@
+# ═══════════════════════════════════════════════════════════════
+# ADDENDUM D — Secret Redaction Pattern Registry
+# CANONICAL — the ONLY place new patterns are added.
+# All entries must have: name, pattern (regex), replacement,
+#   test_fixture, innocuous_fixture
+# ═══════════════════════════════════════════════════════════════
+
+[[patterns]]
+name          = "openai_key"
+pattern       = 'sk-[A-Za-z0-9]{48}'
+replacement   = "[REDACTED:openai_key]"
+test_fixture  = "sk-aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789abcdefghij12"
+innocuous     = "asking a question is fine"
+
+[[patterns]]
+name          = "github_pat"
+pattern       = 'ghp_[A-Za-z0-9]{36}'
+replacement   = "[REDACTED:github_pat]"
+test_fixture  = "ghp_aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789"
+innocuous     = "github is a platform"
+
+[[patterns]]
+name          = "aws_access_key"
+pattern       = 'AKIA[0-9A-Z]{16}'
+replacement   = "[REDACTED:aws_access_key]"
+test_fixture  = "AKIAIOSFODNN7EXAMPLE"
+innocuous     = "aws is a cloud provider"
+
+[[patterns]]
+name          = "private_key_header"
+pattern       = '-----BEGIN [A-Z ]*PRIVATE KEY-----'
+replacement   = "[REDACTED:private_key]"
+test_fixture  = "-----BEGIN RSA PRIVATE KEY-----"
+innocuous     = "-----BEGIN PUBLIC KEY-----"
+
+[[patterns]]
+name          = "bearer_token"
+pattern       = 'Bearer [A-Za-z0-9\-._~+/]+=*'
+replacement   = "[REDACTED:bearer_token]"
+test_fixture  = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+innocuous     = "bearer of bad news"
+
+[[patterns]]
+name          = "db_connection_string"
+pattern       = '(postgres|mysql|mongodb|redis)://[^\s]+:[^\s]+@[^\s]+'
+replacement   = "[REDACTED:db_connection_string]"
+test_fixture  = "postgres://user:password@localhost:5432/mydb"
+innocuous     = "postgres is a database"
+
+[[patterns]]
+name          = "credit_card"
+pattern       = '\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11})\b'
+replacement   = "[REDACTED:credit_card]"
+test_fixture  = "4532015112830366"
+innocuous     = "the year 1234567890"
+
+[entropy_heuristic]
+enabled                = true
+min_length             = 20
+entropy_threshold      = 4.5        # Shannon entropy; strings above this flagged
+context_window_chars   = 30         # Characters around string checked for key=, secret=, etc.
+
+[browser_excluded_domains]
+# Domains that are NEVER fetched by the browser ingestor.
+# This list is append-only. Removal requires explicit ADR.
+domains = [
+  "chase.com", "bankofamerica.com", "wellsfargo.com",
+  "1password.com", "lastpass.com", "bitwarden.com", "dashlane.com",
+  "okta.com", "auth0.com", "onelogin.com",
+  "mail.google.com", "outlook.live.com", "mail.yahoo.com",
+  "myhealth.*", "mychart.*", "*.epic.com",
+  "127.0.0.1", "localhost", "*.local",
+  "facebook.com/messages", "instagram.com/direct",
+  "twitter.com/messages", "signal.me"
+]
